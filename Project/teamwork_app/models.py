@@ -2,6 +2,14 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.db import models
 from django_softdelete.models import SoftDeleteModel
 
+
+__all__ = (
+    "Employee",
+    "Project",
+    "Task",
+    "Comment",
+    "Board"
+)
 POSITION_CHOICES = (
     ("JR", "Junior developer"),
     ("MD", "Middle developer"),
@@ -27,8 +35,7 @@ STATUS_CHOICES = (
 )
 
 
-# Управление профилем пользователя.
-class Employee(SoftDeleteModel):
+class Employee(SoftDeleteModel):  # для физического удаления записи использовать hard_delete()
     """
     Модель сотрудника
     """
@@ -52,7 +59,7 @@ class Employee(SoftDeleteModel):
 
     class Meta:
         verbose_name = "Сотрудник"
-        verbose_name_plural = "Список сотрудников"
+        verbose_name_plural = "Сотрудники"
         ordering = ("first_name",)
 
 
@@ -73,7 +80,7 @@ class Project(SoftDeleteModel):
 
     class Meta:
         verbose_name = "Проект"
-        verbose_name_plural = "Список проектов"
+        verbose_name_plural = "Проекты"
         ordering = ("name",)
 
 
@@ -97,7 +104,7 @@ class Task(SoftDeleteModel):
 
     class Meta:
         verbose_name = "Задача"
-        verbose_name_plural = "Список задач"
+        verbose_name_plural = "Задачи"
         ordering = ("project",)
 
 
@@ -116,7 +123,7 @@ class Comment(SoftDeleteModel):
 
     class Meta:
         verbose_name = "Комментарий"
-        verbose_name_plural = "Список комментариев"
+        verbose_name_plural = "Комментарии"
         ordering = ("task",)
 
 
