@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.hashers import make_password, check_password
 from django.db import models
 from django_softdelete.models import SoftDeleteModel
@@ -35,7 +36,7 @@ STATUS_CHOICES = (
 )
 
 
-class Employee(SoftDeleteModel):  # для физического удаления записи использовать hard_delete()
+class Employee(AbstractUser, SoftDeleteModel):  # для физического удаления записи использовать hard_delete()
     """
     Модель сотрудника
     """
@@ -43,10 +44,14 @@ class Employee(SoftDeleteModel):  # для физического удалени
     first_name = models.CharField(max_length=128, verbose_name="Имя")
     second_name = models.CharField(max_length=128, verbose_name="Фамилия")
     fam_name = models.CharField(max_length=128, null=True, blank=True, verbose_name="Отчество")
-    login = models.EmailField(max_length=128, unique=True, verbose_name="Логин")
+    email = models.EmailField(max_length=128, unique=True, verbose_name="Email")
     password = models.CharField(max_length=128)
     is_manager = models.BooleanField(default=False, verbose_name="Является ли пользователь менеджером")
     post = models.CharField(max_length=128, choices=POSITION_CHOICES, verbose_name="Должность")
+    username = None
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
     def set_password(self, password):
         self.password = make_password(password)
