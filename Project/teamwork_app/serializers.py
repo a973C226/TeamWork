@@ -1,17 +1,20 @@
 from rest_framework import serializers
 from .models import Employee
 
+
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = ['id',
-                  'first_name',
-                  'second_name',
-                  'fam_name',
-                  'email',
-                  'password',
-                  'is_manager',
-                  'post']
+        fields = [
+            'id',
+            'first_name',
+            'second_name',
+            'fam_name',
+            'email',
+            'password',
+            'is_manager',
+            'post'
+        ]
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -23,3 +26,12 @@ class EmployeeSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+
+class EmployeeSerializerAuth(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = [
+            'email',
+            'password'
+        ]

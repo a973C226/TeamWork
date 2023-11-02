@@ -25,7 +25,12 @@ PRIORITY_CHOICES = (
     ("High", "Важный"),
     ("Highest", "Срочный"),
 )
-CATEGORY_CHOICES = (("Bug", "Баг"), ("Task", "Задача"), ("Epic", "Epic"), ("Refactor", "Рефакторинг"))
+CATEGORY_CHOICES = (
+    ("Bug", "Баг"),
+    ("Task", "Задача"),
+    ("Epic", "Epic"),
+    ("Refactor", "Рефакторинг")
+)
 STATUS_CHOICES = (
     ("TO DO", "Созданo"),
     ("Stopped", "Приостановлено"),
@@ -55,9 +60,6 @@ class Employee(AbstractUser, SoftDeleteModel):  # для физического 
 
     def set_password(self, password):
         self.password = make_password(password)
-
-    def check_password(self, password):
-        return check_password(password, self.password)
 
     def __str__(self):
         return f"{self.first_name} {self.second_name}"
