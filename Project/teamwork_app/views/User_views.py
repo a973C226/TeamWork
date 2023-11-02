@@ -1,17 +1,14 @@
-from django.contrib.auth.password_validation import validate_password
-from django.http import JsonResponse
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
+from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 
-from .serializers import EmployeeSerializer, EmployeeSerializerAuth
-from .tokens import create_jwt_pair_for_user
+from teamwork_app.serializers import EmployeeSerializer, EmployeeSerializerAuth
+from teamwork_app.tokens import create_jwt_pair_for_user
 
 
-# Create your views here.
 class RegisterView(APIView):
     """
     Регистрация пользователей
@@ -26,8 +23,8 @@ class RegisterView(APIView):
                 validate_password(request.data["password"])
             except Exception as password_errors:
                 errors = []
-                for item in password_errors:
-                    errors.append(item)
+                for error in password_errors:
+                    errors.append(error)
                 response = {
                     "Status": False,
                     "Errors": errors
@@ -59,7 +56,8 @@ class AuthView(APIView):
         if user is not None:
             tokens = create_jwt_pair_for_user(user)
             response = {
-                "message": "Login successfully", "tokens": tokens
+                "message": "Login successfully",
+                "tokens": tokens
             }
             return Response(data=response, status=HTTP_200_OK)
         else:
