@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Войти в систему</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css"/>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 5px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      form {
+        margin-top: 170px;
+        margin: 50px auto;
+        width: 400px;
+        padding: 55px;
+        background-color: #f2f2f2;
+        border-radius: 20px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+      }
+
+      form label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      select {
+        font-family: "Montserrat", sans-serif;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 18px;
+      }
+
+      input[type="checkbox"],
+      select {
+        font-family: "Montserrat", sans-serif;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 18px;
+      }
+
+      .checkbox-inline-block {
+      display: inline-block;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Вход в систему</h1>
+
+    <form id="authorization-form" action="/app/auth/" method="post">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Email" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" placeholder="Пароль" required />
+      </div>
+
+      <button type="submit">Войти в систему</button>
+    </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
+    <script>
+      document.getElementById("authorization-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+
+        fetch("/app/auth/", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.Errors && data.Status == false) {
+              var errors = data.Errors.join("\n");
+              alertify.error(errors);}
+            else if (data.email) {
+                var email_errors = data.email.join("\n");
+                alertify.error(email_errors);
+              }
+              else {
+              alertify.success(data.message);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Ошибка во время регистрации. Попробуйте ещё раз.");
+          });
+      });
+    </script>
+  </body>
+</html>

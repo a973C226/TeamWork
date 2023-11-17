@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from django.views.generic import TemplateView
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -5,16 +7,24 @@ from rest_framework.request import Request
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 
+from teamwork_app.models import POSITION_CHOICES
 from teamwork_app.serializers import EmployeeSerializer, EmployeeSerializerAuth
 from teamwork_app.tokens import create_jwt_pair_for_user
 
 
-class RegisterView(APIView):
+class RegisterView(APIView, TemplateView):
     """
     Регистрация пользователей
     """
+    template_name = 'registration.html'
     permission_classes = []
     serializer_class = EmployeeSerializer
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        positions = dict(POSITION_CHOICES)
+        context['positions'] = positions
+        return context
 
     def post(self, request: Request) -> Response:
         serializer = self.serializer_class(data=request.data)
@@ -40,10 +50,11 @@ class RegisterView(APIView):
         return Response(data=serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
-class AuthView(APIView):
+class AuthView(APIView, TemplateView):
     """
     Авторизация пользователей
     """
+    template_name = "auth.html"
     permission_classes = []
     serializer_class = EmployeeSerializerAuth
 

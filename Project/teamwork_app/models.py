@@ -49,7 +49,7 @@ class Employee(AbstractUser, SoftDeleteModel):  # для физического 
     first_name = models.CharField(max_length=128, verbose_name="Имя")
     second_name = models.CharField(max_length=128, verbose_name="Фамилия")
     fam_name = models.CharField(max_length=128, null=True, blank=True, verbose_name="Отчество")
-    email = models.EmailField(max_length=128, unique=True, verbose_name="Email")
+    email = models.EmailField(max_length=128, unique=True, verbose_name="email")
     password = models.CharField(max_length=128)
     is_manager = models.BooleanField(default=False, verbose_name="Является ли пользователь менеджером")
     post = models.CharField(max_length=128, choices=POSITION_CHOICES, verbose_name="Должность")
@@ -65,7 +65,7 @@ class Employee(AbstractUser, SoftDeleteModel):  # для физического 
         return f"{self.first_name} {self.second_name}"
 
     class Meta:
-        verbose_name = "Сотрудник"
+        verbose_name = "Employee"
         verbose_name_plural = "Сотрудники"
         ordering = ("first_name",)
 
