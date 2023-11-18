@@ -108,21 +108,13 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            if (data.Errors && data.Status == false) {
-              var errors = data.Errors.join("\n");
-              alertify.error(errors);}
-            else if (data.email) {
-                var email_errors = data.email.join("\n");
-                alertify.error(email_errors);
-              }
+            if (data.Status == false) {
+              var message = data.message;
+              alertify.error(message);}
               else {
               alertify.success(data.message);
             }
           })
-          .catch((error) => {
-            console.error("Error:", error);
-            alert("Ошибка во время регистрации. Попробуйте ещё раз.");
-          });
       });
     </script>
   </body>

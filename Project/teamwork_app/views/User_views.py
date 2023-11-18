@@ -73,6 +73,7 @@ class AuthView(APIView, TemplateView):
             return Response(data=response, status=HTTP_200_OK)
         else:
             response = {
+                "Status": False,
                 "message": "Invalid email or password"
             }
             return Response(data=response, status=HTTP_400_BAD_REQUEST)
