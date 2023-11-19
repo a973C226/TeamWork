@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
@@ -16,14 +15,15 @@ class RegisterView(APIView, TemplateView):
     """
     Регистрация пользователей
     """
-    template_name = 'registration.html'
+
+    template_name = "registration.html"
     permission_classes = []
     serializer_class = EmployeeSerializer
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         positions = dict(POSITION_CHOICES)
-        context['positions'] = positions
+        context["positions"] = positions
         return context
 
     def post(self, request: Request) -> Response:
@@ -54,7 +54,8 @@ class AuthView(APIView, TemplateView):
     """
     Авторизация пользователей
     """
-    template_name = "auth.html"
+
+    template_name = "login.html"
     permission_classes = []
     serializer_class = EmployeeSerializerAuth
 

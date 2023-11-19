@@ -1,84 +1,10 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
   <head>
     <title>Регистрация</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css"/>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 5px;
-      }
-
-      h1 {
-        text-align: center;
-      }
-
-      form {
-        margin-top: 170px;
-        margin: 50px auto;
-        width: 400px;
-        padding: 55px;
-        background-color: #f2f2f2;
-        border-radius: 20px;
-        box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
-      }
-
-      form label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: bold;
-      }
-
-      input[type="text"],
-      input[type="email"],
-      input[type="password"],
-      select {
-        font-family: "Montserrat", sans-serif;
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 18px;
-      }
-
-      input[type="checkbox"],
-      select {
-        font-family: "Montserrat", sans-serif;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 18px;
-      }
-
-      .checkbox-inline-block {
-      display: inline-block;
-      }
-
-      label {
-        display: block;
-        margin-bottom: 5px;
-      }
-
-      .form-group {
-        margin-bottom: 15px;
-      }
-
-      button[type="submit"] {
-        width: 100%;
-        padding: 10px;
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-
-      button[type="submit"]:hover {
-        background-color: #45a049;
-      }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
   </head>
   <body>
     <h1>Регистрация</h1>
@@ -105,8 +31,9 @@
         <input type="password" id="password" name="password" placeholder="Пароль" required />
       </div>
       <div class="form-group checkbox-inline-block">
-        <label for="is_manager">Менеджер:
-            <input type="checkbox" id="is_manager" name="is_manager" />
+        <label for="is_manager"
+          >Менеджер:
+          <input type="checkbox" id="is_manager" name="is_manager" />
         </label>
       </div>
       <div class="form-group">
@@ -125,7 +52,7 @@
       document.getElementById("registration-form").addEventListener("submit", function (event) {
         event.preventDefault();
 
-        var formData = new FormData(this);
+        let formData = new FormData(this);
 
         fetch("/app/register/", {
           method: "POST",
@@ -134,14 +61,16 @@
           .then((response) => response.json())
           .then((data) => {
             if (data.Errors && data.Status == false) {
-              var errors = data.Errors.join("\n");
-              alertify.error(errors);}
-            else if (data.email) {
-                var email_errors = data.email.join("\n");
-                alertify.error(email_errors);
-              }
-              else {
+              let errors = data.Errors.join("\n");
+              alertify.error(errors);
+            } else if (data.email) {
+              let email_errors = data.email.join("\n");
+              alertify.error(email_errors);
+            } else {
               alertify.success(data.message);
+              setTimeout(function () {
+                window.location.href = "/app/login/";
+              }, 1000);
             }
           })
           .catch((error) => {
