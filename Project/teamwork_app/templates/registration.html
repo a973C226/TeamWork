@@ -9,7 +9,7 @@
   <body>
     <h1>Регистрация</h1>
 
-    <form id="registration-form" action="/app/register/" method="post">
+    <form id="registration-form" action="/register/" method="post">
       <div class="form-group">
         <label for="first_name">Имя:</label>
         <input type="text" id="first_name" name="first_name" placeholder="Имя" required />
@@ -54,7 +54,7 @@
 
         let formData = new FormData(this);
 
-        fetch("/app/register/", {
+        fetch("/register/", {
           method: "POST",
           body: formData,
         })
@@ -69,7 +69,7 @@
             } else {
               alertify.success(data.message);
               setTimeout(function () {
-                window.location.href = "/app/login/";
+                window.location.href = "/login/";
               }, 1000);
             }
           })

@@ -3,13 +3,13 @@
 <html>
   <head>
     <title>Войти в систему</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
     <link rel="stylesheet" href="{% static "css/style.css" %}">
   </head>
   <body>
     <h1>Вход в систему</h1>
 
-    <form id="authorization-form" action="/app/login/" method="post">
+    <form id="authorization-form" action="/login/" method="post">
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" placeholder="Email" required />
@@ -28,7 +28,7 @@
 
         let formData = new FormData(this);
 
-        fetch("/app/login/", {
+        fetch("/login/", {
           method: "POST",
           body: formData,
         })
@@ -36,11 +36,11 @@
           .then((data) => {
             if (data.Status == false) {
               let message = data.message;
-              alertify.error(message);}
-              else {
+              alertify.error(message);
+            } else {
               alertify.success(data.message);
             }
-          })
+          });
       });
     </script>
   </body>
