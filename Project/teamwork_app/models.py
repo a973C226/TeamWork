@@ -49,17 +49,14 @@ class Employee(AbstractUser, SoftDeleteModel):  # для физического 
     first_name = models.CharField(max_length=128, verbose_name="Имя")
     second_name = models.CharField(max_length=128, verbose_name="Фамилия")
     fam_name = models.CharField(max_length=128, null=True, blank=True, verbose_name="Отчество")
-    email = models.EmailField(max_length=128, unique=True, verbose_name="email")
-    password = models.CharField(max_length=128)
-    is_manager = models.BooleanField(default=False, verbose_name="Является ли пользователь менеджером")
+    email = models.EmailField(max_length=128, unique=True, verbose_name="Email")
+    password = models.CharField(max_length=128, verbose_name="Пароль")
+    is_manager = models.BooleanField(default=False, verbose_name="Менеджер")
     post = models.CharField(max_length=128, choices=POSITION_CHOICES, verbose_name="Должность")
     username = None
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
-
-    def set_password(self, password):
-        self.password = make_password(password)
 
     def __str__(self):
         return f"{self.first_name} {self.second_name}"

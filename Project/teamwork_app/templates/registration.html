@@ -1,84 +1,28 @@
 <!DOCTYPE html>
 {% load static %}
-<html>
+<html lang="en">
   <head>
-    <title>Регистрация</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
     <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <meta charset="UTF-8" />
+    <title>Title</title>
   </head>
   <body>
     <h1>Регистрация</h1>
-
-    <form id="registration-form" action="/register/" method="post">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="first_name">Имя:</label>
-        <input type="text" id="first_name" name="first_name" placeholder="Имя" required />
-      </div>
-      <div class="form-group">
-        <label for="second_name">Фамилия:</label>
-        <input type="text" id="second_name" name="second_name" placeholder="Фамилия" required />
-      </div>
-      <div class="form-group">
-        <label for="fam_name">Отчество:</label>
-        <input type="text" id="fam_name" name="fam_name" placeholder="Отчество" />
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Email" required />
-      </div>
-      <div class="form-group">
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" name="password" placeholder="Пароль" required />
-      </div>
-      <div class="form-group checkbox-inline-block">
-        <label for="is_manager"
-          >Менеджер:
-          <input type="checkbox" id="is_manager" name="is_manager" />
-        </label>
-      </div>
-      <div class="form-group">
-        <label for="post">Должность:</label>
-        <select id="post" name="post">
-          {% for key, value in positions.items %}
-          <option value="{{ key }}">{{ value }}</option>
-          {% endfor %}
-        </select>
-      </div>
-
+    <form method="post">
+      {% csrf_token %} {% if form.non_field_errors %}
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
+      <script>
+        alertify.error("{{ form.non_field_errors | striptags }}");
+      </script>
+      {% endif %} {% for f in form %}
+      <label for="{{ f.id_for_label }}"> {{ f.label }}: </label> {{ f }} {% if f.errors %}
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
+      <script>
+        alertify.error("{{ f.errors | striptags }}");
+      </script>
+      {% endif %} {% endfor %}
       <button type="submit">Зарегистрироваться</button>
     </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
-    <script>
-      document.getElementById("registration-form").addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        let formData = new FormData(this);
-
-        fetch("/register/", {
-          method: "POST",
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.Errors && data.Status == false) {
-              let errors = data.Errors.join("\n");
-              alertify.error(errors);
-            } else if (data.email) {
-              let email_errors = data.email.join("\n");
-              alertify.error(email_errors);
-            } else {
-              alertify.success(data.message);
-              setTimeout(function () {
-                window.location.href = "/login/";
-              }, 800);
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            alert("Ошибка во время регистрации. Попробуйте ещё раз");
-          });
-      });
-    </script>
   </body>
 </html>
