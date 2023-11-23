@@ -3,6 +3,7 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Управление командной работой</title>
     <style>
@@ -11,45 +12,6 @@
         background-color: #f8f8f8;
         margin: 0;
         padding: 0;
-      }
-
-      .containerLog {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin: 20px;
-      }
-
-      .containerReg {
-        display: flex;
-        justify-content: flex;
-        align-items: center;
-        margin: 20px;
-      }
-
-      .containerLog button {
-        margin-left: 10px;
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        padding: 8px 15px;
-        font-size: 20px;
-      }
-
-      .containerReg button {
-        box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.8);
-        margin-left: 10px;
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        padding: 8px 15px;
-        font-size: 25px;
-        margin: 0 auto;
-        width: 300px;
       }
 
       h1 {
@@ -69,6 +31,18 @@
         font-size: 30px;
         color: #333;
         margin-top: 100px;
+      }
+
+      .container button {
+          box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.8);
+          margin-left: 10px;
+          background-color: #4caf50;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          padding: 8px 15px;
+          font-size: 20px;
       }
 
       .main_text {
@@ -92,8 +66,9 @@
   </head>
 
   <body>
-    <div class="containerLog">
+    <div class="container">
       <button onclick="toLogin()">Войти</button>
+      <button onclick="toRegister()">Регистрация</button>
     </div>
     <h1>Управление командной работой</h1>
     <div class="main_text">
@@ -115,9 +90,6 @@
       <p class="p1">
       🚀 Откройте новые возможности для вашей команды прямо сейчас на нашем сайте!
       </p>
-    </div>
-    <div class="containerReg">
-      <button onclick="toRegister()">Регистрация</button>
     </div>
   </body>
 </html>

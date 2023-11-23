@@ -1,21 +1,23 @@
+from django.contrib.auth import logout
+from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from rest_framework.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
 from django.contrib.auth.password_validation import validate_password
-from django.contrib.auth import authenticate
 
+from teamwork_app.forms import LoginUserForm
 from teamwork_app.models import POSITION_CHOICES
 from teamwork_app.serializers import EmployeeSerializer, EmployeeSerializerAuth
-from teamwork_app.tokens import create_jwt_pair_for_user
 
 
 class RegisterView(APIView, TemplateView):
     """
     Регистрация пользователей
     """
-
     template_name = "registration.html"
     permission_classes = []
     serializer_class = EmployeeSerializer
@@ -50,31 +52,22 @@ class RegisterView(APIView, TemplateView):
         return Response(data=serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 
-class AuthView(APIView, TemplateView):
+class AuthView(LoginView):
     """
-    Авторизация пользователей
+    Аунтификацуя пользователей
     """
-
     template_name = "login.html"
     permission_classes = []
     serializer_class = EmployeeSerializerAuth
+    form_class = LoginUserForm
 
-    def post(self, request: Request) -> Response:
-        email = request.data["email"]
-        password = request.data["password"]
+    def get_success_url(self):
+        return reverse_lazy("main-menu")
 
-        user = authenticate(email=email, password=password)
 
-        if user is not None:
-            tokens = create_jwt_pair_for_user(user)
-            response = {
-                "message": "Login successfully",
-                "tokens": tokens
-            }
-            return Response(data=response, status=HTTP_200_OK)
-        else:
-            response = {
-                "Status": False,
-                "message": "Invalid email or password"
-            }
-            return Response(data=response, status=HTTP_400_BAD_REQUEST)
+def logout_user(request):
+    """
+    Выход из профиля
+    """
+    logout(request)
+    return redirect("main-screen")

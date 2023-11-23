@@ -10,6 +10,7 @@
     <h1>Регистрация</h1>
 
     <form id="registration-form" action="/register/" method="post">
+      {% csrf_token %}
       <div class="form-group">
         <label for="first_name">Имя:</label>
         <input type="text" id="first_name" name="first_name" placeholder="Имя" required />
@@ -70,7 +71,7 @@
               alertify.success(data.message);
               setTimeout(function () {
                 window.location.href = "/login/";
-              }, 1000);
+              }, 800);
             }
           })
           .catch((error) => {

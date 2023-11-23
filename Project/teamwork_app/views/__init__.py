@@ -1,1 +1,2 @@
-from .User_views import *
+from .User import *
+from .Project import *

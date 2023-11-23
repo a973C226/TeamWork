@@ -1,10 +1,13 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from .views import RegisterView, AuthView
+from .views import RegisterView, AuthView, ProjectView, logout_user
 
 urlpatterns = [
+        path("", TemplateView.as_view(template_name='mainScreen.html'), name="main-screen"),
+        path("main-menu/", TemplateView.as_view(template_name='mainMenu.html'), name="main-menu"),
         path("register/", RegisterView.as_view(), name="registration"),
         path("login/", AuthView.as_view(), name="login"),
-        path("", TemplateView.as_view(template_name='mainScreen.html'), name="main-screen"),
+        path("logout/", logout_user, name="logout"),
+        path("create-project/", ProjectView.as_view(), name="create-project"),
 ]

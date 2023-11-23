@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import Employee
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from .models import Employee, Project
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -34,4 +36,21 @@ class EmployeeSerializerAuth(serializers.ModelSerializer):
         fields = [
             'email',
             'password'
+        ]
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    creator = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all())
+
+    class Meta:
+        model = Project
+        fields = [
+            'id',
+            'name',
+            'description',
+            'employee',
+            'creator',
         ]
