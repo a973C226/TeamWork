@@ -68,12 +68,6 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
-# SIMPLE_JWT = {
-#     "ACCESS_TOKEN_LIFETIME": timedelta(days=2),
-#     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
-#     "SIGNING_KEY": SECRET_KEY,
-#     "AUTH_HEADER_TYPES": ("JWT",)
-# }
 
 TEMPLATES = [
     {
@@ -86,6 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'teamwork_app.context_processors.flash_messages',
             ],
         },
     },

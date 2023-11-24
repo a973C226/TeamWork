@@ -3,7 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
 from django.forms import ModelForm
 
-from teamwork_app.models import Employee, Task
+from teamwork_app.models import Employee, Task, Project
 
 
 class RegisterUserForm(UserCreationForm):
@@ -14,7 +14,7 @@ class RegisterUserForm(UserCreationForm):
         label="Фамилия", widget=forms.TextInput(attrs={"class": "form-group", "placeholder": "Фамилия"})
     )
     fam_name = forms.CharField(
-        label="Отчество", widget=forms.TextInput(attrs={"class": "form-group", "placeholder": "Отчество"})
+        label="Отчество", required=False, widget=forms.TextInput(attrs={"class": "form-group", "placeholder": "Отчество"})
     )
     email = forms.CharField(
         label="Email", widget=forms.EmailInput(attrs={"class": "form-group", "placeholder": "Email"})
@@ -69,3 +69,30 @@ class CreateTaskForm(ModelForm):
             'status': 'Статус задачи',
             'project': 'Проект'
         }
+
+    def __init__(self, *args, **kwargs):
+        super(CreateTaskForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({"class": "form-group", "placeholder": field.label})
+
+
+class CreateProjectForm(ModelForm):
+    class Meta:
+        model = Project
+        fields = [
+            'name',
+            'description',
+            'employee',
+        ]
+        labels = {
+            'name': 'Название',
+            'description': 'Описание',
+            'employee': 'Сотрудники проекта',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CreateProjectForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({"class": "form-group", "placeholder": field.label})

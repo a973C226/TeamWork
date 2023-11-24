@@ -64,26 +64,34 @@
 
   <body>
     <div class="container">
-      <button onclick="toLogin()" disabled> {{ user.email }} </button>
+      <button disabled> {{ user }} </button>
       <button><a href="{% url 'logout' %}"> Выйти </a></button>
     </div>
     <h1>Управление командной работой</h1>
   <div style="display: flex; justify-content: space-around; margin-top: 160px;">
     <div class="main_text">
       <b><p> Проекты </p></b>
-      <button> Просмотр проектов </button><br><br><br>
-      <button> Создать проект </button>
+      <button><a href="{% url 'view-projects' %}"> Просмотр проектов </a></button><br><br><br>
+      <button><a href="{% url 'create-project' %}"> Создать проект </a></button>
     </div>
     <div class="main_text">
       <b><p> Задачи </p></b>
-      <button> Просмотр задач </button><br><br><br>
-      <button> Создать задачу </button>
+      <button><a href="{% url 'user-tasks' %}"> Просмотр задач </a></button><br><br><br>
+      <button><a href="{% url 'user-tasks-create' %}"> Создать задачу </a></button>
     </div>
       <div class="main_text">
      <b><p> Другое </p></b>
       <button> Профиль </button>
     </div>
     </div>
+      {% if flash_messages %}
+        {% for message in flash_messages %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
+            <script>
+            alertify.success("{{ message }}");
+            </script>
+        {% endfor %}
+      {% endif %}
   </body>
 </html>
 
