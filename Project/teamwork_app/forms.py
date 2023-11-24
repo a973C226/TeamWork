@@ -65,4 +65,3 @@ class CreateTaskForm(ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-group', 'placeholder': field.label})
-
