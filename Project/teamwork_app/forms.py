@@ -34,13 +34,3 @@ class LoginUserForm(AuthenticationForm):
     password = forms.CharField(
         label="Пароль", widget=forms.PasswordInput(attrs={"class": "form-group", "placeholder": "Пароль"})
     )
-
-    class Meta:
-        model = Employee
-        fields = ("email", "password")
-
-    def __init__(self, *args, **kwargs):
-        super(LoginUserForm, self).__init__(*args, **kwargs)
-
-        for name, field in self.fields.items():
-            field.widget.attrs.update({"class": "form-group", "placeholder": field.label})
