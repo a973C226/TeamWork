@@ -11,11 +11,11 @@ urlpatterns = [
         path("logout/", logout_user, name="logout"),
         # path("create-project/", ProjectView.as_view(), name="create-project"),
 
-        # view tasks
+        # посмотреть задачи
         path("tasks/", Task.view_tasks, name="user-tasks"),
         path("project/<str:project_id>/tasks/", Task.view_tasks, name="project-tasks"),
 
-        # create task
-        path("tasks/create/", Task.create_task, name="user-tasks-create"),
+        # создать задачу
+        path("main-menu/tasks/create/", Task.create_task, name="user-tasks-create"),
         path("project/<str:project_id>/tasks/create/", Task.create_task, name="project-tasks-create"),
 ]

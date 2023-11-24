@@ -14,7 +14,7 @@ def view_tasks(request, project_id=None):
         tasks = Task.objects.filter(executor=user_id, project=project_id)
     else:
         tasks = Task.objects.filter(executor=user_id)
-    context = { 'tasks': tasks }
+    context = {'tasks': tasks}
     return render(request, 'taskTable.html', context)
 
 
@@ -43,4 +43,4 @@ def create_task(request, project_id=None):
         'form': form
     }
 
-    return render(request,'createTaskCopy.html', context)
+    return render(request, 'createTaskCopy.html', context)
