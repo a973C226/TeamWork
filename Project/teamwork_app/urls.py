@@ -1,7 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from .views import RegisterView, AuthView, logout_user, Task
+from .views import RegisterView, AuthView, logout_user, view_tasks, create_task
 
 urlpatterns = [
         path("", TemplateView.as_view(template_name='mainScreen.html'), name="main-screen"),
@@ -12,10 +12,10 @@ urlpatterns = [
         # path("create-project/", ProjectView.as_view(), name="create-project"),
 
         # посмотреть задачи
-        path("tasks/", Task.view_tasks, name="user-tasks"),
-        path("project/<str:project_id>/tasks/", Task.view_tasks, name="project-tasks"),
+        path("tasks/", view_tasks, name="user-tasks"),
+        path("project/<str:project_id>/tasks/", view_tasks, name="project-tasks"),
 
         # создать задачу
-        path("main-menu/tasks/create/", Task.create_task, name="user-tasks-create"),
-        path("project/<str:project_id>/tasks/create/", Task.create_task, name="project-tasks-create"),
+        path("main-menu/tasks/create/", create_task, name="user-tasks-create"),
+        path("project/<str:project_id>/tasks/create/", create_task, name="project-tasks-create"),
 ]
