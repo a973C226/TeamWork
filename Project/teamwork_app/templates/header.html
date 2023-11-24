@@ -1,0 +1,27 @@
+{% load static %}
+<header>
+	<script>
+		function toRegister() {
+		  window.location.href = "/register/";
+		}
+		function toLogin() {
+		  window.location.href = "/login/";
+		}
+	</script>
+	<div class="header-container">
+	  <a href="{% url 'main-menu' %}">
+		<img src="{% static "img/logo.png" %}" style="width: 10vw;"/>
+	  </a>
+	  {% if request.user.is_authenticated %}
+	  <div>
+		<button class="btn btn-dark">{{ request.user.first_name }} {{ request.user.second_name }}</button>
+		<button class="btn btn-dark"><a href="{% url 'logout' %}"> Выйти </a></button>
+	  </div>
+	  {% else %}
+	  <div>
+		<button class="btn btn-dark" onclick="toLogin()">Войти</button>
+      	<button class="btn btn-dark" onclick="toRegister()">Регистрация</button>
+	  </div>
+	  {% endif %}
+	</div>
+</header>
