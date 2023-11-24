@@ -75,7 +75,6 @@ class Project(SoftDeleteModel):
     name = models.CharField(max_length=128, verbose_name="Название")
     description = models.CharField(max_length=200, verbose_name="Описание")
     employee = models.ManyToManyField(Employee, verbose_name="Сотрудник проекта", related_name="project_as_employee")
-    task_manager = models.ManyToManyField(Employee, verbose_name="Менеджер проекта", related_name="project_as_manager")
     creator = models.ForeignKey(Employee, verbose_name="Создатель проекта", on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True, verbose_name="Дата создания")
 

@@ -1,37 +1,44 @@
-from django.views.generic import TemplateView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
-from rest_framework.views import APIView
-from rest_framework.request import Request
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 
-from teamwork_app.models import Employee
-from teamwork_app.serializers import ProjectSerializer
+from teamwork_app.models import Employee, Project
 
 
-class ProjectView(APIView, TemplateView):
-    """
-    Действие над проектоем
-    """
+@login_required
+def view_projects(request, project_id=None):
+    user_id = request.user.id
+    if project_id is not None:
+        project = Project.objects.filter(project=project_id)
+        context = {'project': project}
+        return render(request, 'board.html', context)
+    else:
+        projects = Project.objects.filter(employee=user_id)
+        context = {'projects': projects}
+        return render(request, 'viewProjects.html', context)
 
-    permission_classes = []
-    serializer_class = ProjectSerializer
-    template_name = "mainMenu.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        employees = Employee.objects.all()
-        context["employees"] = employees
-        return context
-
-    def post(self, request: Request) -> Response:
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            response = {
-                "message": "Project created successfully",
-                "data": serializer.data
-            }
-            return Response(data=response, status=HTTP_201_CREATED)
-
-        return Response(data=serializer.errors, status=HTTP_400_BAD_REQUEST)
+# @login_required
+# def create_task(request):
+#     form = CreateProjectForm()
+#     if project_id is not None:
+#         # автовыбор проекта и деактивация поля
+#         project = Project.objects.get(id=project_id)
+#         projects = [(project.id, project.name)]
+#         form.fields['project']._set_choices(projects)
+#         form.fields['project'].disabled = True
+#         # можно выбрать исполнителя из списка сотрудников, добавленных в проект
+#         employees = Employee.objects.filter(project=project_id)
+#         employees = [(employee.id, employee.__str__()) for employee in employees]
+#         form.fields['executor']._set_choices([('', '---------')] + employees)
+#
+#     if request.method == 'POST':
+#         form = CreateProjectForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Задача успешно создана')
+#             return redirect('main-menu')
+#
+#     context = {
+#         'form': form
+#     }
+#
+#     return render(request,'createTaskCopy.html', context)
