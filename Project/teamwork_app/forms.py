@@ -1,7 +1,9 @@
+from django.conf.global_settings import DATE_INPUT_FORMATS
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
+from django.forms import ModelForm
 
-from teamwork_app.models import Employee
+from teamwork_app.models import Employee, Task
 
 
 class RegisterUserForm(UserCreationForm):
@@ -31,6 +33,35 @@ class RegisterUserForm(UserCreationForm):
 
 
 class LoginUserForm(AuthenticationForm):
-    password = forms.CharField(
-        label="Пароль", widget=forms.PasswordInput(attrs={"class": "form-group", "placeholder": "Пароль"})
-    )
+    password = forms.CharField(label="Пароль", widget=forms.PasswordInput(attrs={"class": "form-group"}))
+
+
+class CreateTaskForm(ModelForm):
+    class Meta:
+        model = Task
+        fields = [
+            'name',
+            'description',
+            'deadline',
+            'priority',
+            'category',
+            'executor',
+            'status',
+            'project'
+        ]
+        labels = {
+            'name': 'Название',
+            'description': 'Описание',
+            'deadline': 'Дата окончания',
+            'priority': 'Приоритет',
+            'category': 'Тип задачи',
+            'executor': 'Исполнитель',
+            'status': 'Статус задачи',
+            'project': 'Проект'
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CreateTaskForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-group', 'placeholder': field.label})
