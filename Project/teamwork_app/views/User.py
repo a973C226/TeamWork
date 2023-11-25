@@ -15,8 +15,13 @@ class RegisterView(CreateView):
     """
 
     form_class = RegisterUserForm
-    template_name = "registration.html"
+    template_name = "baseForm.html"
     permission_classes = []
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context = context | {"form_title": "Регистрация", "submit_btn_text": "Зарегистрироваться"}
+        return context
 
     def form_valid(self, form):
         user = form.save()

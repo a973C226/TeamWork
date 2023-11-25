@@ -14,12 +14,12 @@ def view_projects(request, project_id=None):
     user_id = request.user.id
     if project_id is not None:
         project = Project.objects.get(project=project_id)
-        context = {'project': project}
-        return render(request, 'board.html', context)
+        context = {"project": project}
+        return render(request, "taskBoard.html", context)
     else:
         projects = Project.objects.filter(employee=user_id)
-        context = {'projects': projects}
-        return render(request, 'viewProjects.html', context)
+        context = {"projects": projects}
+        return render(request, "viewProjectsList.html", context)
 
 
 @login_required
@@ -29,17 +29,15 @@ def create_project(request):
     """
     form = CreateProjectForm()
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CreateProjectForm(request.POST)
         if form.is_valid():
             # автовыбор текущего сотрудника
             form.instance.creator = request.user
             form.save()
-            messages.success(request, 'Проект успешно создан')
-            return redirect('main-menu')
+            messages.success(request, "Проект успешно создан")
+            return redirect("main-menu")
 
-    context = {
-        'form': form
-    }
+    context = {"form": form, "form_title": "Создание проекта", "submit_btn_text": "Создать проект"}
 
-    return render(request, 'createProject.html', context)
+    return render(request, "baseForm.html", context)

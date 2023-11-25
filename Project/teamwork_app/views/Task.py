@@ -72,6 +72,6 @@ def create_task(request, project_id=None):
             messages.success(request, "Задача успешно создана")
             return redirect("main-menu")
 
-    context = {"form": form}
+    context = {"form": form, "form_title": "Создание задачи", "submit_btn_text": "Создать задачу"}
 
-    return render(request, "createProject.html", context)
+    return render(request, "baseForm.html", context)
