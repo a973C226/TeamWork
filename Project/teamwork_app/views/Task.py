@@ -14,11 +14,30 @@ def view_tasks(request, project_id=None):
     """
     user_id = request.user.id
     if project_id is not None:
-        tasks = Task.objects.filter(executor=user_id, project=project_id)
+        tasks = Task.objects.filter(project=project_id)
     else:
         tasks = Task.objects.filter(executor=user_id)
-    context = {"tasks": tasks}
-    return render(request, "taskTable.html", context)
+    form = CreateTaskForm()
+    context = {
+        "form": form,
+        "form_first_col": [
+            form["name"],
+            form["description"],
+        ],
+        "form_second_col": [
+            form["status"],
+            form["executor"],
+            form["priority"],
+            form["deadline"],
+        ],
+        "todo": tasks.filter(status="TO DO").order_by("deadline"),
+        "stopped": tasks.filter(status="Stopped").order_by("deadline"),
+        "in_progress": tasks.filter(status="In progress").order_by("deadline"),
+        "review": tasks.filter(status="Review").order_by("deadline"),
+        "in_testing": tasks.filter(status="In testing").order_by("deadline"),
+        "complete": tasks.filter(status="Complete").order_by("deadline"),
+    }
+    return render(request, "taskBoard.html", context)
 
 
 @login_required

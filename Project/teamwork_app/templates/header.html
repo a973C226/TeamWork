@@ -15,7 +15,7 @@
 	  {% if request.user.is_authenticated %}
 	  <div>
 		<button class="btn btn-dark">{{ request.user.first_name }} {{ request.user.second_name }}</button>
-		<button class="btn btn-dark"><a href="{% url 'logout' %}"> Выйти </a></button>
+		<button class="btn btn-dark"><a class="text-decoration-none text-white" href="{% url 'logout' %}"> Выйти </a></button>
 	  </div>
 	  {% else %}
 	  <div>

@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "css/board.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Модальное окно -->
+    <div class="modal modal-xl fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            {% include 'baseFormModal.html' %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kanban-heading">
+        <strong class="kanban-heading-text">Ваши задачи</strong>
+    </div>
+    <div class="kanban-board">
+        <div class="kanban-board__block">
+            <div id="todo" class="kanban-board__head fs-5">TO DO</div>
+            {% for task in todo %}
+            {% if task.priority == 'High' or task.priority == 'Highest' %}
+            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% else %}
+                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% endif %}
+                <div class="kanban-board__card-row">
+                    <p class="kanban-board__card-task-name">
+                        {{ task }}
+                    </p>
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-flag kanban-board__card-row__icon"></i>
+                    {{ task.deadline|date }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <div class="kanban-board__card-row__icon">
+                        <i class="fa fa-exclamation"></i>
+                    </div>
+                    {{ task.priority }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-user-circle kanban-board__card-row__icon"></i>
+                    {{ task.executor }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="kanban-board__block">
+            <div id="stopped" class="kanban-board__head fs-5">Stopped</div>
+            {% for task in stopped %}
+            {% if task.priority == 'High' or task.priority == 'Highest' %}
+            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% else %}
+                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% endif %}
+                <div class="kanban-board__card-row">
+                    <p class="kanban-board__card-task-name">
+                        {{ task }}
+                    </p>
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-flag kanban-board__card-row__icon"></i>
+                    {{ task.deadline|date }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <div class="kanban-board__card-row__icon">
+                        <i class="fa fa-exclamation"></i>
+                    </div>
+                    {{ task.priority }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-user-circle kanban-board__card-row__icon"></i>
+                    {{ task.executor }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="kanban-board__block">
+            <div id="in_progress" class="kanban-board__head fs-5">In progress</div>
+            {% for task in in_progress %}
+            {% if task.priority == 'High' or task.priority == 'Highest' %}
+            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% else %}
+                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% endif %}
+                <div class="kanban-board__card-row">
+                    <p class="kanban-board__card-task-name">
+                        {{ task }}
+                    </p>
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-flag kanban-board__card-row__icon"></i>
+                    {{ task.deadline|date }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <div class="kanban-board__card-row__icon">
+                        <i class="fa fa-exclamation"></i>
+                    </div>
+                    {{ task.priority }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-user-circle kanban-board__card-row__icon"></i>
+                    {{ task.executor }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="kanban-board__block">
+            <div id="review" class="kanban-board__head fs-5">Review</div>
+            {% for task in review %}
+            {% if task.priority == 'High' or task.priority == 'Highest' %}
+            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% else %}
+                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% endif %}
+                <div class="kanban-board__card-row">
+                    <p class="kanban-board__card-task-name fw-semibold">
+                        {{ task }}
+                    </p>
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-flag kanban-board__card-row__icon"></i>
+                    {{ task.deadline|date }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <div class="kanban-board__card-row__icon">
+                        <i class="fa fa-exclamation"></i>
+                    </div>
+                    {{ task.priority }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-user-circle kanban-board__card-row__icon"></i>
+                    {{ task.executor }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="kanban-board__block">
+            <div id="in_testing" class="kanban-board__head fs-5">In testing</div>
+            {% for task in in_testing %}
+            {% if task.priority == 'High' or task.priority == 'Highest' %}
+            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% else %}
+                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% endif %}
+                <div class="kanban-board__card-row">
+                    <p class="kanban-board__card-task-name">
+                        {{ task }}
+                    </p>
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-flag kanban-board__card-row__icon"></i>
+                    {{ task.deadline|date }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <div class="kanban-board__card-row__icon">
+                        <i class="fa fa-exclamation"></i>
+                    </div>
+                    {{ task.priority }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-user-circle kanban-board__card-row__icon"></i>
+                    {{ task.executor }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="kanban-board__block">
+            <div id="complete" class="kanban-board__head fs-5">Complete</div>
+            {% for task in complete %}
+            {% if task.priority == 'High' or task.priority == 'Highest' %}
+            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% else %}
+                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            {% endif %}
+                <div class="kanban-board__card-row">
+                    <p class="kanban-board__card-task-name">
+                        {{ task }}
+                    </p>
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-flag kanban-board__card-row__icon"></i>
+                    {{ task.deadline|date }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <div class="kanban-board__card-row__icon">
+                        <i class="fa fa-exclamation"></i>
+                    </div>
+                    {{ task.priority }}
+                </div>
+                <div class="kanban-board__card-row">
+                    <i class="fa fa-user-circle kanban-board__card-row__icon"></i>
+                    {{ task.executor }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

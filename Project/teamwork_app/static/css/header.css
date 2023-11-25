@@ -1,5 +1,7 @@
 header {
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
+	background-color: #4caf50;
+	background-size: 100%;
 }
 
 .header-container {
@@ -7,7 +9,6 @@ header {
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	width: 100%;
-	background-color: #4caf50;
+	width: 100vw;
 	padding: 0.5rem 1.5rem;
 }

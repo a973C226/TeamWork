@@ -47,6 +47,9 @@ class LoginUserForm(AuthenticationForm):
 
 
 class CreateTaskForm(ModelForm):
+    description = forms.CharField(
+        label="Описание", widget=forms.Textarea()
+    )
     class Meta:
         model = Task
         fields = [
@@ -74,7 +77,7 @@ class CreateTaskForm(ModelForm):
         super(CreateTaskForm, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
-            field.widget.attrs.update({"class": "form-group", "placeholder": field.label})
+            field.widget.attrs.update({"class": "form-control", "placeholder": field.label})
 
 
 class CreateProjectForm(ModelForm):

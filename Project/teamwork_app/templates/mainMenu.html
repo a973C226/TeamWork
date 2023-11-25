@@ -1,89 +1,26 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html>
-  <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Управление командной работой</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f8f8;
-        margin: 0;
-        padding: 0;
-      }
-
-      h1 {
-        font-size: 60px;
-        text-align: center;
-        color: #333;
-        margin-top: 40px;
-      }
-
-      p {
-        font-size: 40px;
-        text-align: center;
-        color: #333;
-        margin-top: 10px;
-      }
-
-      .main_text {
-        box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.8);
-        width: 500px;
-        display:inline-block;
-        border: 5px solid #4caf50;
-        border-radius: 15px;
-        padding: 30px;
-        margin: 0 auto;
-        margin-top: 30px;
-      }
-
-      .main_text button {
-        box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.8);
-        margin-left: 10px;
-        background-color: #4caf50;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        padding: 8px 15px;
-        font-size: 30px;
-        margin: 0 auto;
-        display: block;
-    }
-
-    a {
-      color: #fff;
-      text-decoration: none;
-    }
-    </style>
-    <script>
-    </script>
-  </head>
-
-  <body>
-    <div class="container">
-      <button disabled> {{ user }} </button>
-      <button><a href="{% url 'logout' %}"> Выйти </a></button>
+{% block styles %}
+  <link rel="stylesheet" href="{% static "css/main_menu.css" %}">
+{% endblock %}
+{% block content %}
+  <h1>Управление командной работой</h1>
+  <div class="menu__container">
+    <div class="menu__block">
+      <b><p class="menu__block-title"> Проекты </p></b>
+      <button class="menu__block-btn"><a href="{% url 'view-projects' %}"> Просмотр проектов </a></button><br><br>
+      <button class="menu__block-btn"><a href="{% url 'create-project' %}"> Создать проект </a></button>
     </div>
-    <h1>Управление командной работой</h1>
-  <div style="display: flex; justify-content: space-around; margin-top: 160px;">
-    <div class="main_text">
-      <b><p> Проекты </p></b>
-      <button><a href="{% url 'view-projects' %}"> Просмотр проектов </a></button><br><br><br>
-      <button><a href="{% url 'create-project' %}"> Создать проект </a></button>
+    <div class="menu__block">
+      <b><p class="menu__block-title"> Задачи </p></b>
+      <button class="menu__block-btn"><a href="{% url 'user-tasks' %}"> Просмотр задач </a></button><br><br>
+      <button class="menu__block-btn"><a href="{% url 'user-tasks-create' %}"> Создать задачу </a></button>
     </div>
-    <div class="main_text">
-      <b><p> Задачи </p></b>
-      <button><a href="{% url 'user-tasks' %}"> Просмотр задач </a></button><br><br><br>
-      <button><a href="{% url 'user-tasks-create' %}"> Создать задачу </a></button>
+    <div class="menu__block">
+      <b><p class="menu__block-title"> Другое </p></b>
+      <button class="menu__block-btn"> Профиль </button>
     </div>
-      <div class="main_text">
-     <b><p> Другое </p></b>
-      <button> Профиль </button>
-    </div>
-    </div>
+  </div>
       {% if flash_messages %}
         {% for message in flash_messages %}
             <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
@@ -92,6 +29,6 @@
             </script>
         {% endfor %}
       {% endif %}
-  </body>
-</html>
+{% endblock %}
+
 

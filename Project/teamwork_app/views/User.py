@@ -1,3 +1,4 @@
+from typing import Any
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
@@ -29,8 +30,13 @@ class AuthView(LoginView):
     """
 
     form_class = LoginUserForm
-    template_name = "login.html"
+    template_name = "baseForm.html"
     permission_classes = []
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context = context | {"form_title": "Авторизация", "submit_btn_text": "Войти"}
+        return context
 
     def get_success_url(self):
         return reverse_lazy("main-menu")
