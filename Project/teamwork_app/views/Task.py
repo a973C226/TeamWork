@@ -13,11 +13,16 @@ def view_tasks(request, project_id=None):
     Просмотр задач
     """
     user_id = request.user.id
+    form = CreateTaskForm()
     if project_id is not None:
         tasks = Task.objects.filter(project=project_id)
     else:
         tasks = Task.objects.filter(executor=user_id)
-    form = CreateTaskForm()
+        projects = Project.objects.filter(employee=request.user.id)
+        # Создать задачу можно только на тот проект, куда добавлен юзер
+        projects = [(project.id, project.__str__()) for project in projects]
+        form.fields["project"]._set_choices([("", "---------")] + projects)
+
     context = {
         "form": form,
         "form_first_col": [
@@ -55,6 +60,10 @@ def create_task(request, project_id=None):
     else:
         form = CreateTaskForm()
         employees = Employee.objects.all()
+        projects = Project.objects.filter(employee=request.user.id)
+        # Создать задачу можно только на тот проект, куда добавлен юзер
+        projects = [(project.id, project.__str__()) for project in projects]
+        form.fields["project"]._set_choices([("", "---------")] + projects)
 
     # можно выбрать исполнителя из списка сотрудников, добавленных в проект
     employees = [(employee.id, employee.__str__()) for employee in employees]

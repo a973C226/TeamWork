@@ -1,5 +1,4 @@
 from django.urls import path
-from django.views.generic import TemplateView
 
 from .views import RegisterView, AuthView, logout_user, view_projects, SecureTemplateView, create_project, \
         view_tasks, create_task, main_screen_view
