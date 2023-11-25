@@ -1,11 +1,11 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from .views import RegisterView, AuthView, logout_user, Task, view_projects, SecureTemplateView, create_project, \
-        view_tasks, create_task
+from .views import RegisterView, AuthView, logout_user, view_projects, SecureTemplateView, create_project, \
+        view_tasks, create_task, main_screen_view
 
 urlpatterns = [
-        path("", TemplateView.as_view(template_name='mainScreen.html'), name="main-screen"),
+        path("", main_screen_view, name="main-screen"),
         path("main-menu/", SecureTemplateView.as_view(template_name='mainMenu.html'), name="main-menu"),
         path("register/", RegisterView.as_view(), name="registration"),
         path("login/", AuthView.as_view(), name="login"),

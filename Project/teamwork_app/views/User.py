@@ -2,7 +2,7 @@ from typing import Any
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 
@@ -53,6 +53,15 @@ def logout_user(request):
     """
     logout(request)
     return redirect("main-screen")
+
+
+def main_screen_view(request):
+    """
+        view для стартовой страницы
+    """
+    if request.user.is_authenticated:
+        return redirect("main-menu")
+    return render(request, "mainScreen.html")
 
 
 class SecureTemplateView(TemplateView):
