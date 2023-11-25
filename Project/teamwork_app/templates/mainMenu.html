@@ -9,7 +9,9 @@
     <div class="menu__block">
       <b><p class="menu__block-title"> Проекты </p></b>
       <button class="menu__block-btn"><a href="{% url 'view-projects' %}"> Просмотр проектов </a></button><br><br>
+      {% if user.is_manager %}
       <button class="menu__block-btn"><a href="{% url 'create-project' %}"> Создать проект </a></button>
+        {% endif %}
     </div>
     <div class="menu__block">
       <b><p class="menu__block-title"> Задачи </p></b>
