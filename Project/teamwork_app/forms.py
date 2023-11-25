@@ -13,7 +13,10 @@ class RegisterUserForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(RegisterUserForm, self).__init__(*args, **kwargs)
         for name, field in self.fields.items():
-            field.widget.attrs.update({"class": "form-control", "placeholder": field.label})
+            if name == "is_manager":
+                field.widget.attrs.update({"class": "form-check-input", "placeholder": field.label})
+            else:
+                field.widget.attrs.update({"class": "form-control", "placeholder": field.label})
 
 
 class LoginUserForm(AuthenticationForm):
@@ -39,13 +42,13 @@ class CreateTaskForm(ModelForm):
         model = Task
         fields = [
             'name',
-            'description',
             'deadline',
             'priority',
             'category',
             'executor',
             'status',
-            'project'
+            'project',
+            'description'
         ]
 
     def __init__(self, *args, **kwargs):

@@ -12,8 +12,15 @@
       </script>
     {% endif %}
     {% for f in form %}
-      <label for="{{ f.id_for_label }}"> {{ f.label }}: </label> 
-      {{ f }} 
+      {% if f.id_for_label == "id_is_manager" %}
+        <div class="form-check form-switch">
+          {{ f }}
+          <label class="form-check-label" for="{{ f.id_for_label }}"> {{ f.label }} </label>
+        </div>
+      {% else %}
+        <label for="{{ f.id_for_label }}"> {{ f.label }}: </label>
+        {{ f }}
+      {% endif %}
       {% if f.errors %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
         <script>
@@ -21,7 +28,7 @@
         </script>
       {% endif %} 
     {% endfor %}
-    <button type="submit">{{ submit_btn_text }}</button>
+    <button class="submit-btn" type="submit">{{ submit_btn_text }}</button>
   </form>
 </div>
 {% endblock %}
