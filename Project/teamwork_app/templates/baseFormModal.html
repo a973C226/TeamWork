@@ -1,5 +1,5 @@
 {% load static %}
-<form method="post" class="row gy-2 gx-3 align-items-center" style="width: 100%;">
+<form method="post" id="formModal" action="{% url form_action %}" class="row gy-2 gx-3 align-items-center" style="width: 100%;">
 	{% csrf_token %} 
 	{% if form.non_field_errors %}
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>

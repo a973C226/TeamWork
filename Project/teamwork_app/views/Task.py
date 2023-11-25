@@ -22,14 +22,17 @@ def view_tasks(request, project_id=None):
         "form": form,
         "form_first_col": [
             form["name"],
+            form["project"],
             form["description"],
         ],
         "form_second_col": [
             form["status"],
+            form["category"],
             form["executor"],
             form["priority"],
             form["deadline"],
         ],
+        "form_action": "user-tasks-create",
         "todo": tasks.filter(status="TO DO").order_by("deadline"),
         "stopped": tasks.filter(status="Stopped").order_by("deadline"),
         "in_progress": tasks.filter(status="In progress").order_by("deadline"),

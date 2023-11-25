@@ -22,13 +22,16 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    <button form="formModal" type="submit" class="btn btn-primary">Сохранить изменения</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="kanban-heading">
+    <div class="kanban-heading d-flex justify-content-between">
         <strong class="kanban-heading-text">Ваши задачи</strong>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
+          Создать задачу
+        </button>
     </div>
     <div class="kanban-board">
         <div class="kanban-board__block">
@@ -40,7 +43,7 @@
                 <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
-                    <p class="kanban-board__card-task-name">
+                    <p class="kanban-board__card-task-name fw-semibold">
                         {{ task }}
                     </p>
                 </div>
@@ -70,7 +73,7 @@
                 <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
-                    <p class="kanban-board__card-task-name">
+                    <p class="kanban-board__card-task-name fw-semibold">
                         {{ task }}
                     </p>
                 </div>
@@ -100,7 +103,7 @@
                 <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
-                    <p class="kanban-board__card-task-name">
+                    <p class="kanban-board__card-task-name fw-semibold">
                         {{ task }}
                     </p>
                 </div>
@@ -125,7 +128,7 @@
             <div id="review" class="kanban-board__head fs-5">Review</div>
             {% for task in review %}
             {% if task.priority == 'High' or task.priority == 'Highest' %}
-            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+                <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% else %}
                 <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% endif %}
@@ -160,7 +163,7 @@
                 <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
-                    <p class="kanban-board__card-task-name">
+                    <p class="kanban-board__card-task-name fw-semibold">
                         {{ task }}
                     </p>
                 </div>
@@ -190,7 +193,7 @@
                 <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
-                    <p class="kanban-board__card-task-name">
+                    <p class="kanban-board__card-task-name fw-semibold">
                         {{ task }}
                     </p>
                 </div>
