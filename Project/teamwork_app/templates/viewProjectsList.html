@@ -1,15 +1,28 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" />
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static "css/projectList.css" %}">
+  <style>
+
+  </style>
+{% endblock %}
+
+{% block content %}
   {% for project in projects %}
-    {{ project.name }} {{ project.description }} <br>
+    <a href="{% url 'view-board' project_id=project.id %}">
+    <div class="project-row">
+        <div class="project-info">
+          {{ project.name }}
+        </div>
+        <div class="project-info">
+          Описание: {{ project.description }}
+        </div>
+        <div class="project-info">
+          Создатель: {{ project.creator }} - Создано: {{ project.created_at|date:"d F Y" }}
+        </div>
+    </div>
+    </a>
   {% endfor %}
-</body>
-</html>
+{% endblock %}

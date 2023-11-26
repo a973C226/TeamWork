@@ -84,7 +84,7 @@ class Project(SoftDeleteModel):
     class Meta:
         verbose_name = "Проект"
         verbose_name_plural = "Проекты"
-        ordering = ("name",)
+        ordering = ("id",)
 
 
 class Task(SoftDeleteModel):

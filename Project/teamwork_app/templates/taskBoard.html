@@ -28,7 +28,11 @@
         </div>
     </div>
     <div class="kanban-heading d-flex justify-content-between">
-        <strong class="kanban-heading-text">Ваши задачи</strong>
+        {% if project %}
+            <strong class="kanban-heading-text">Проект: {{ project.name }}</strong>
+        {% else %}
+            <strong class="kanban-heading-text">Ваши задачи</strong>
+        {% endif %}
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal">
           Создать задачу
         </button>

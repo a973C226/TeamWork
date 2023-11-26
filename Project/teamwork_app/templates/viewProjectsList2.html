@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static "css/projectList.css" %}">
+  <style>
+
+  </style>
+{% endblock %}
+
+{% block content %}
+  <table>
+    <thead>
+      <tr>
+        <th>Название</th>
+        <th>Описание</th>
+        <th>Создатель</th>
+        <th>Создано</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for project in projects %}
+      <a href="{% url 'view-board' project_id=project.id %}">
+        <tr>
+          <td>{{ project.name }}</td>
+          <td>{{ project.description }}</td>
+          <td>{{ project.creator }}</td>
+          <td>{{ project.created_at|date:"d F Y" }}</td>
+        </tr>
+      </a>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
