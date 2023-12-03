@@ -1,6 +1,5 @@
 *, *::after, *::before {
     box-sizing: inherit;
-    max-width: -webkit-fill-available;
     margin: 0;
     padding: 0;
 }
