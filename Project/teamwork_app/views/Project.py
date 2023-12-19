@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from teamwork_app.forms import CreateProjectForm, CreateTaskForm
-from teamwork_app.models import Project, Task
+from teamwork_app.models import Project, Task, Employee
 
 
 @login_required
@@ -14,18 +14,22 @@ def view_projects(request, project_id=None):
     user_id = request.user.id
     if project_id is not None:
         form = CreateTaskForm()
+        del form.fields["project"]
         project = Project.objects.get(id=project_id)
         tasks = Task.objects.filter(project=project_id)
+        employees = Employee.objects.filter(project=project_id)
+        employees = [(employee.id, employee.__str__()) for employee in employees]
+        form.fields["executor"]._set_choices([("", "---------")] + employees)
+
         context = {
             "project": project,
             "form": form,
             "form_first_col": [
                 form["name"],
-                form["project"],
+                form["status"],
                 form["description"],
             ],
             "form_second_col": [
-                form["status"],
                 form["category"],
                 form["executor"],
                 form["priority"],

@@ -13,7 +13,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Заголовок модального окна</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Редактирование задачи</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                     </div>
                     <div class="modal-body">
@@ -23,6 +23,7 @@
                     </div>
                     <div class="modal-footer">
                     <button form="formModal" type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    <button class="btn btn-primary" style="background-color: red; border: 1px solid red;">Удалить</button>
                 </div>
             </div>
         </div>
@@ -42,9 +43,11 @@
             <div id="todo" class="kanban-board__head fs-5">TO DO</div>
             {% for task in todo %}
             {% if task.priority == 'High' or task.priority == 'Highest' %}
-            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            <div class="kanban-board__card important-task" data-id="{{task.id}}" data-bs-toggle="modal"
+                 data-bs-target="#taskModal">
             {% else %}
-                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+                <div class="kanban-board__card lowset-task" data-id="{{task.id}}" data-bs-toggle="modal"
+                data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
                     <p class="kanban-board__card-task-name fw-semibold">
@@ -72,9 +75,10 @@
             <div id="stopped" class="kanban-board__head fs-5">Stopped</div>
             {% for task in stopped %}
             {% if task.priority == 'High' or task.priority == 'Highest' %}
-            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            <div class="kanban-board__card important-task" data-id="{{task.id}}" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% else %}
-                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+                <div class="kanban-board__card lowset-task" data-id="{{task.id}}" data-bs-toggle="modal"
+                     data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
                     <p class="kanban-board__card-task-name fw-semibold">
@@ -102,9 +106,10 @@
             <div id="in_progress" class="kanban-board__head fs-5">In progress</div>
             {% for task in in_progress %}
             {% if task.priority == 'High' or task.priority == 'Highest' %}
-            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            <div class="kanban-board__card important-task" data-id="{{task.id}}" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% else %}
-                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+                <div class="kanban-board__card lowset-task" data-id="{{task.id}}" data-bs-toggle="modal"
+                     data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
                     <p class="kanban-board__card-task-name fw-semibold">
@@ -132,9 +137,11 @@
             <div id="review" class="kanban-board__head fs-5">Review</div>
             {% for task in review %}
             {% if task.priority == 'High' or task.priority == 'Highest' %}
-                <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+                <div class="kanban-board__card important-task" data-id="{{task.id}}" data-bs-toggle="modal"
+                     data-bs-target="#taskModal">
             {% else %}
-                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+                <div class="kanban-board__card lowset-task" data-id="{{task.id}}" data-bs-toggle="modal"
+                     data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
                     <p class="kanban-board__card-task-name fw-semibold">
@@ -162,9 +169,9 @@
             <div id="in_testing" class="kanban-board__head fs-5">In testing</div>
             {% for task in in_testing %}
             {% if task.priority == 'High' or task.priority == 'Highest' %}
-            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            <div class="kanban-board__card important-task" data-id="{{task.id}}" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% else %}
-                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+                <div class="kanban-board__card lowset-task" data-id="{{task.id}}" data-bs-toggle="modal" data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
                     <p class="kanban-board__card-task-name fw-semibold">
@@ -192,9 +199,11 @@
             <div id="complete" class="kanban-board__head fs-5">Complete</div>
             {% for task in complete %}
             {% if task.priority == 'High' or task.priority == 'Highest' %}
-            <div class="kanban-board__card important-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+            <div class="kanban-board__card important-task" data-id="{{task.id}}" data-bs-toggle="modal"
+                 data-bs-target="#taskModal">
             {% else %}
-                <div class="kanban-board__card lowset-task" data-bs-toggle="modal" data-bs-target="#taskModal">
+                <div class="kanban-board__card lowset-task" data-id="{{task.id}}" data-bs-toggle="modal"
+                     data-bs-target="#taskModal">
             {% endif %}
                 <div class="kanban-board__card-row">
                     <p class="kanban-board__card-task-name fw-semibold">
@@ -220,4 +229,49 @@
         </div>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  let cards = document.querySelectorAll('.kanban-board__card');
+  let taskModal = document.getElementById('taskModal');
+  let formModal = document.getElementById('formModal');
+
+  cards.forEach(function(card) {
+    card.addEventListener('click', function() {
+      let taskId = card.dataset.id;
+
+      fetch('/get-task/' + taskId)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          let taskData = data;
+          let deadlineDate = taskData.deadline;
+          let date = new Date(deadlineDate);
+          let formattedDate = ('0' + date.getDate()).slice(-2) + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+
+          formModal.name.value = taskData.name;
+          formModal.description.value = taskData.description;
+          formModal.status.value = taskData.status;
+          formModal.category.value = taskData.category;
+          formModal.executor.value = taskData.executor.name;
+          formModal.priority.value = taskData.priority;
+          formModal.deadline.value = formattedDate;
+
+          let modal = new bootstrap.Modal(taskModal);
+          modal.show();
+        })
+        .catch(function(error) {
+          console.error('Ошибка при получении данных задачи:', error);
+        });
+    });
+  });
+
+  taskModal.addEventListener('hidden.bs.modal', function() {
+    let backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+      backdrop.remove();
+    }
+  });
+});
+</script>
 {% endblock %}

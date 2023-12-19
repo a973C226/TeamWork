@@ -57,7 +57,7 @@ def logout_user(request):
 
 def main_screen_view(request):
     """
-        view для стартовой страницы
+    view для стартовой страницы
     """
     if request.user.is_authenticated:
         return redirect("main-menu")
