@@ -128,12 +128,3 @@ class Comment(SoftDeleteModel):
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
         ordering = ("task",)
-
-
-# Это сделать к диплому
-class Board(SoftDeleteModel):
-    """
-    Модель доски
-    """
-
-    pass
